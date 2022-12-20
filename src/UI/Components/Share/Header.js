@@ -134,7 +134,7 @@ const Header = () => {
                   </ul>
                 </li>
                 <li class="nav__item  has-dropdown">
-                  <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Features</a>
+                  <a href="/" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Features</a>
                   <ul class="dropdown-menu">
                     <li class="nav__item">
                       <a href="coming-soon.html" class="nav__item-link">Coming Soon</a>
@@ -143,10 +143,10 @@ const Header = () => {
                       <a href="404.html" class="nav__item-link">404 Page</a>
                     </li>
                     <li class="nav__item">
-                      <a href="#" class="nav__item-link  open-register-popup">Register</a>
+                      <a href="/" class="nav__item-link  open-register-popup">Register</a>
                     </li>
                     <li class="nav__item">
-                      <a href="#" class="nav__item-link  open-login-popup">Login</a>
+                      <a href="/" class="nav__item-link  open-login-popup">Login</a>
                     </li>
                   </ul>
                 </li>

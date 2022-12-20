@@ -1,10 +1,11 @@
 import React from 'react';
+import Chart from '../Chart/Chart';
 
 const Dhome = () => {
     return (
-        <div>
-            <h1>D Home</h1>
-        </div>
+        <>
+            <Chart />
+        </>
     );
 };
 
