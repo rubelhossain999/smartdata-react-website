@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Dhome from '../Dashboard/Components/Dhome/Dhome';
+import AddSlider from '../Dashboard/Components/Dsliders/AddSlider';
 import Dsliders from '../Dashboard/Components/Dsliders/Dsliders';
 import DError from '../Dashboard/Share/DError';
 import Dheader from '../Dashboard/Share/Dheader';
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/sliders',
                 element: <Dsliders />
+            },
+            {
+                path: '/dashboard/addslider',
+                element: <AddSlider />
             },
             {
                 path: '*',
