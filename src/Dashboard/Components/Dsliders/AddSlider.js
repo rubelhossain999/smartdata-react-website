@@ -4,41 +4,49 @@ import { useNavigate } from 'react-router';
 
 const AddSlider = () => {
     const nagigator = useNavigate();
+    const imgbbAPI = process.env.REACT_APP_ibbimage_KEY;
 
     const handleAddSliderdata = event => {
         event.preventDefault();
         const form = event.target;
 
-        const title = form.title.value;
-        const subtitle = form.subtitle.value;
-        const file = form.file.value;
-        const buttonone = form.buttonone.value;
-        const buttontwo = form.buttontwo.value;
-
-        const sliderData = {
-            title,
-            subtitle,
-            file,
-            buttonone,
-            buttontwo
-        }
-
-
-        // Data Insert Data on the MongoDB
-        fetch('http://localhost:5000/addsliders', {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(sliderData)
+        /// Image upload Process
+        const image = form.image.files[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imgbbAPI}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
         })
-        .then( res => res.json())
-        .then( data => {
-            toast.success("Slider Added Succes!");
-            nagigator('/dashboard/sliders');
-            console.log(data);
-        })
-        .catch( error => console.log(error))
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    const imaData = {
+                        image: imgData.data.url,
+                        title: form.title.value,
+                        subtitle: form.subtitle.value,
+                        buttonone: form.buttonone.value,
+                        buttontwo: form.buttontwo.value,
+                    };
+
+                    // Data Insert Data on the MongoDB
+                    fetch('http://localhost:5000/addsliders', {
+                        method: "POST",
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(imaData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            toast.success("Slider Added Succes!");
+                            nagigator('/dashboard/sliders');
+                            console.log(data);
+                        })
+                        .catch(error => console.log(error))
+                }
+            })
     }
 
 
@@ -58,15 +66,15 @@ const AddSlider = () => {
                         <form onSubmit={handleAddSliderdata}>
                             <div className="form-group">
                                 <h6>Title</h6>
-                                <input type="text" name='title' className="form-control" id="title" placeholder="Slider Title" />
+                                <input type="text" name='title' className="form-control" id="title" placeholder="Slider Title" required />
                             </div>
                             <div className="form-group">
                                 <h6>Sub Title</h6>
-                                <textarea type="text" rows="3" name='subtitle' className="form-control" id="subtitle" placeholder="Sub Slider Title" />
+                                <textarea type="text" rows="3" name='subtitle' className="form-control" id="subtitle" placeholder="Sub Slider Title" required />
                             </div>
                             <h6>Slider Image</h6>
                             <div className="input-group mb-3">
-                                <input type="file" name='file' className="form-control pt-3" id="inputGroupFile02" />
+                                <input type="file" name='image' className="form-control pt-3" id="inputGroupFile02" />
                                 <label className="input-group-text" for="inputGroupFile02">Upload</label>
                             </div>
                             <div className="input-group">
